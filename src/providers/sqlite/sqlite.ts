@@ -14,7 +14,6 @@ export class SqliteUtil{
             location:'default'
         }).then((db:SQLiteObject)=>{
             let createTabelSql='create table '+tableName+' ()';
-            db.
             db.executeSql('create table userLogin(name VARCHAR(32))',{})
             .then(()=>console.log('create table'))
             .catch(e=>console.log(e))

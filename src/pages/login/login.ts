@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
-
+// import { TranslateService } from '@ngx-translate/core';
+import { IonicPage, NavController,Events } from 'ionic-angular';
+import { NgForm } from '@angular/forms';   //form验证
 import { User } from '../../providers/providers';
+import {UserData} from '../../providers/providers';
+// import{Utils} from '../../providers/providers';
 import { MainPage } from '../pages';
+// import {StorageService} from '../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -15,36 +18,43 @@ export class LoginPage {
   // If you're using the username field with or without email, make
   // sure to add it to the type
   account: { phone: string, password: string } = {
-    phone: '130000000',
-    password: 'test'
+    phone: '',
+    password: ''
   };
+  submitted=false;
 
-  // Our translated text strings
-  private loginErrorString: string;
-
-  constructor(public navCtrl: NavController,
-    public user: User,
-    public toastCtrl: ToastController,
-    public translateService: TranslateService) {
-
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
-    })
+  constructor(public navCtrl: NavController,public user: UserData,private events:Events) {
   }
 
   // Attempt to login in through our User service
-  doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
-    }, (err) => {
-      this.navCtrl.push(MainPage);
-      // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+  doLogin(form:NgForm) {
+    if(form.valid){
+      this.submitted=false;
+      this.loginAction();
+    }else{
+      this.submitted=true;
+    }
+  }
+  private loginAction():void{
+    this.user.login(this.account);
+    this.events.subscribe("user:login",s=>{
+      if(s){
+        this.navCtrl.push(MainPage);
+      }
     });
+    // this.user.login(this.account)
+    //   .then(resp => {
+    //         this.navCtrl.push(MainPage);})
+    //   .catch(error=>{
+    //     this.navCtrl.push(MainPage);
+    //     // Unable to log in
+    //     // let toast = this.toastCtrl.create({
+    //     //   message: '登录失败！',
+    //     //   duration: 3000,
+    //     //   position: 'middle'
+    //     // });
+    //     // toast.present();
+    //     this.utils.toast('登录失败！');
+    //   });
   }
 }

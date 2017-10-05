@@ -14,6 +14,11 @@ import { Items } from '../mocks/providers/items';
 import { Settings } from '../providers/providers';
 import { User } from '../providers/providers';
 import { Api } from '../providers/providers';
+import{StorageService} from '../providers/providers';
+import{BackButtonService} from '../providers/providers';
+import{Utils} from '../providers/providers';
+import{HttpUtils} from '../providers/providers';
+import{UserData} from '../providers/providers';
 import { MyApp } from './app.component';
 
 // The translate loader needs to know where to load i18n files
@@ -68,6 +73,7 @@ export function provideSettings(storage: Storage) {
   ],
   providers: [
     Api,
+    HttpUtils,
     Items,
     User,
     Camera,
@@ -76,7 +82,11 @@ export function provideSettings(storage: Storage) {
     { provide: Settings, useFactory: provideSettings, deps: [Storage] },
     // Keep this to enable Ionic's runtime error handling during development
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    SQLite
+    SQLite,
+    StorageService,
+    BackButtonService,
+    Utils,
+    UserData,
   ]
 })
 export class AppModule { }
