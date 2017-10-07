@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, MenuController, NavController, Platform } from 'ionic-angular';
+import {UserData} from '../../providers/providers';
 
 export interface Slide {
   title: string;
@@ -17,32 +18,41 @@ export class TutorialPage {
   showSkip = true;
   //dir: string = 'ltr';
 
-  constructor(public navCtrl: NavController, public menu: MenuController, public platform: Platform) {
+  constructor(public navCtrl: NavController, public menu: MenuController,public user:UserData, public platform: Platform) {
     
         this.slides = [
           {
             title: "",
             description: "",
-            image: 'assets/img/ica-slidebox-img-1.png',
+            image: 'assets/img/ica-slidebox-img-1.jpg',
           },
           {
             title: "",
             description: "",
-            image: 'assets/img/ica-slidebox-img-2.png',
+            image: 'assets/img/ica-slidebox-img-2.jpg',
           },
           {
             title: "",
             description: "",
-            image: 'assets/img/ica-slidebox-img-3.png',
+            image: 'assets/img/ica-slidebox-img-3.jpg',
           }
         ];
   }
 
   startApp() {
-    this.navCtrl.setRoot('WelcomePage', {}, {
-      animate: true,
-      direction: 'forward'
-    });
+    this.user.hasLoggedIn().then(flag=>{
+      if(flag){
+        this.navCtrl.setRoot('TabsPage',{},{
+          animate:true,
+          direction:'forward'
+        });
+      }else{
+        this.navCtrl.setRoot('WelcomePage', {}, {
+          animate: true,
+          direction: 'forward'
+        });
+      }
+    })
   }
 
   onSlideChangeStart(slider) {

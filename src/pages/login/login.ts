@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 // import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController,Events } from 'ionic-angular';
 import { NgForm } from '@angular/forms';   //form验证
-import { User } from '../../providers/providers';
 import {UserData} from '../../providers/providers';
 // import{Utils} from '../../providers/providers';
 import { MainPage } from '../pages';
@@ -36,12 +35,17 @@ export class LoginPage {
     }
   }
   private loginAction():void{
-    this.user.login(this.account);
-    this.events.subscribe("user:login",s=>{
-      if(s){
-        this.navCtrl.push(MainPage);
-      }
-    });
+    if(this.user.isLogin()){
+      this.navCtrl.push(MainPage);
+    }else{
+      this.user.login(this.account);
+      this.events.subscribe("user:login",s=>{
+        if(s){
+          this.navCtrl.push(MainPage);
+        }
+      });
+    }
+    
     // this.user.login(this.account)
     //   .then(resp => {
     //         this.navCtrl.push(MainPage);})

@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 // import { Http, Response } from '@angular/http';
 import { HttpClient } from '@angular/common/http';
 import { LoadingController,Loading } from 'ionic-angular';
-import {ResponseData} from './responseData';
+// import {ResponseData} from './responseData';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -45,7 +45,6 @@ export class HttpUtils {
             content: '请稍等...'
         });
         this.loading.present();
-        console.log(url);
         return this.http.post(url, params)
             .toPromise()
             .then((res:any)=>this.handleSuccess(res))
@@ -61,15 +60,14 @@ export class HttpUtils {
         console.log(res);
         this.loading.dismiss();
         //let body = res["_body"];
-        let responseData=new ResponseData();
-        responseData={
-            data: res.json() || {},
-            statusText: res.statusText,
-            status: res.status,
-            success: true
-        }
-        return responseData;
-
+        // let responseData=new ResponseData();
+        // responseData={
+        //     data: res || {},
+        //     statusText: res.statusText,
+        //     status: res.status,
+        //     success: true
+        // }
+        return res;
     }
 
     /**
@@ -90,8 +88,8 @@ export class HttpUtils {
         if (error.status == 500) {
             console.error('请求的服务器错误');
         }
-        console.log(error);
-        throw error;
+        console.log("error:"+JSON.stringify(error));
+        throw msg;
         //return { data:msg,statusText:'',success: false, status: error.status };
     }
 }

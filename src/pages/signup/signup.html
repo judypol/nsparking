@@ -8,35 +8,42 @@
 
 
 <ion-content>
-  <form (submit)="doSignup()">
+  <form #signupForm='ngForm' novalidate>
     <ion-list>
 
       <ion-item>
-        <ion-label fixed>{{ 'NAME' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="account.name" name="name"></ion-input>
+        <ion-label fixed>用户名</ion-label>
+        <ion-input type="text" [(ngModel)]="account.userName" name="userName" #userName="ngModel" required></ion-input>
       </ion-item>
-
+      <p ion-text [hidden]="userName.valid || submitted == false" color="danger" padding-left>
+				用户名不能为空
+      </p>
+      
       <ion-item>
-        <ion-label fixed>{{ 'EMAIL' | translate }}</ion-label>
-        <ion-input type="email" [(ngModel)]="account.email" name="email"></ion-input>
+        <ion-label fixed>手机号</ion-label>
+        <ion-input type="text" [(ngModel)]="account.mobile" name="mobile" #mobile="ngModel" required></ion-input>
       </ion-item>
-
-      <!--
-      Want to add a Username? Here you go:
-
+      <p ion-text [hidden]="mobile.valid || submitted == false" color="danger" padding-left>
+				手机号不能为空
+      </p>
+      
       <ion-item>
-        <ion-label floating>Username</ion-label>
-        <ion-input type="text" [(ngModel)]="account.username" name="username"></ion-input>
+        <ion-label fixed>密码</ion-label>
+        <ion-input type="password" [(ngModel)]="account.password" name="password" #password="ngModel" required></ion-input>
       </ion-item>
-      -->
-
+      <p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+				密码不能为空
+      </p>
+      
       <ion-item>
-        <ion-label fixed>{{ 'PASSWORD' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="account.password" name="password"></ion-input>
+        <ion-label fixed>确认密码</ion-label>
+        <ion-input type="password" [(ngModel)]="account.checkPassword" name="checkPassword" #checkPassword="ngModel" required></ion-input>
       </ion-item>
-
+      <p ion-text [hidden]="checkPassword.valid || submitted == false" color="danger" padding-left>
+				确认密码不能为空
+      </p>
       <div padding>
-        <button ion-button color="primary" block>{{ 'SIGNUP_BUTTON' | translate }}</button>
+        <button ion-button color="primary" (click)='doSignup(signupForm)' block>注册</button>
       </div>
 
     </ion-list>

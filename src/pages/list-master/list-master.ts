@@ -3,6 +3,7 @@ import { IonicPage, ModalController, NavController } from 'ionic-angular';
 
 import { Item } from '../../models/item';
 import { Items } from '../../providers/providers';
+import {UserData} from '../../providers/providers';
 
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ import { Items } from '../../providers/providers';
 export class ListMasterPage {
   currentItems: Item[];
 
-  constructor(public navCtrl: NavController, public items: Items, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public items: Items,public user:UserData, public modalCtrl: ModalController) {
     this.currentItems = this.items.query();
   }
 
@@ -35,7 +36,9 @@ export class ListMasterPage {
     })
     addModal.present();
   }
-
+  sign(){
+    this.user.sign();
+  }
   /**
    * Delete an item from the list of items.
    */

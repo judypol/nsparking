@@ -13,7 +13,7 @@ export class SqliteUtil{
             name:this.dbName,
             location:'default'
         }).then((db:SQLiteObject)=>{
-            let createTabelSql='create table '+tableName+' ()';
+            //let createTabelSql='create table '+tableName+' ()';
             db.executeSql('create table userLogin(name VARCHAR(32))',{})
             .then(()=>console.log('create table'))
             .catch(e=>console.log(e))
