@@ -38,27 +38,14 @@ export class LoginPage {
     if(this.user.isLogin()){
       this.navCtrl.push(MainPage);
     }else{
-      this.user.login(this.account);
-      this.events.subscribe("user:login",s=>{
-        if(s){
-          this.navCtrl.push(MainPage);
-        }
+      this.user.login(this.account).then(()=>{
+        this.events.subscribe("user:login",s=>{
+          console.log(s);
+          if(s){
+            this.navCtrl.push(MainPage);
+          }
+        });
       });
     }
-    
-    // this.user.login(this.account)
-    //   .then(resp => {
-    //         this.navCtrl.push(MainPage);})
-    //   .catch(error=>{
-    //     this.navCtrl.push(MainPage);
-    //     // Unable to log in
-    //     // let toast = this.toastCtrl.create({
-    //     //   message: '登录失败！',
-    //     //   duration: 3000,
-    //     //   position: 'middle'
-    //     // });
-    //     // toast.present();
-    //     this.utils.toast('登录失败！');
-    //   });
   }
 }

@@ -26,7 +26,7 @@ export class UserData {
     };
     let self = this;
     let loginUrl = AppConfiguration.getApiUrl() + "/account/login";
-    this.httpUtils.post(loginUrl, payload)
+    return this.httpUtils.post(loginUrl, payload)
       .then(
       (res: any) => {
         if (res.success) {
@@ -35,7 +35,10 @@ export class UserData {
           self.setToken(res.data.token);
           self.hasLogin = true;
           self.storage.set(this.HAS_LOGGED_IN, true);
+          console.log("events");
           self.events.publish("user:login", true);
+        }else{
+          this.utils.toast(res.message);
         }
       }).catch(res => {
         self.events.publish("user:login", false);

@@ -36,10 +36,15 @@ $colors: (
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
+// Use the default background for the tabbar since it inherits from toolbar
+$tabbar-ios-background:                    #f8f8f8;
 
+// Change the color of the tabs text
+$tab-button-ios-active-color:              color($colors, danger);
+$tab-button-ios-inactive-color:            #8c8c8c;
 
-
-
+$tabs-ios-tab-color-active:                 color($colors, danger);
+$tabs-ios-tab-color-inactive:               #8c8c8f;
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
